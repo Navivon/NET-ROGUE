@@ -19,7 +19,27 @@ namespace Rogue
 
             PlayerCharacter player = new PlayerCharacter();
             Console.WriteLine("Valitse nimi: ");
-            player.name = LineReader();
+            while (true)
+            {
+                bool okAnswer = true;
+                player.name = LineReader();
+                for (int i = 0; i < player.name.Length; i++)
+                {
+                    if (char.IsLetter(player.name[i]) == false)
+                    {
+                        okAnswer = false;
+                        break;
+                    }
+                }
+                if (!okAnswer)
+                {
+                    Console.WriteLine("Nimessä on sopimattomia merkkejä. Kirjoita uudestaan:");
+                }
+                else
+                {
+                    break;
+                }
+            }
 
             Console.WriteLine("Valitse rotu:");
             Console.ForegroundColor = ConsoleColor.Green;
@@ -35,6 +55,9 @@ namespace Rogue
                 case "3":
                     player.race = Race.Orc;
                     break;
+                default:
+                    player.race = Race.Human;
+                    break;
             }
 
             Console.WriteLine("Valitse tyyppi:");
@@ -47,6 +70,9 @@ namespace Rogue
                     break;
                 case "2":
                     player.type = Class.Range;
+                    break;
+                default:
+                    player.type = Class.Meele;
                     break;
             }
 
