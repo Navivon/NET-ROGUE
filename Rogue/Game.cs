@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace Rogue
         public void Run()
         {
 
-            PlayerCharacter player = new PlayerCharacter();
+            PlayerCharacter player = new PlayerCharacter('@', ConsoleColor.Green);
             Console.WriteLine("Valitse nimi: ");
             while (true)
             {
@@ -75,9 +76,43 @@ namespace Rogue
                     player.type = Class.Meele;
                     break;
             }
-
+            MapReader reader = new MapReader();
+            Map level01 = reader.LoadJSON("mapfile.json");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"Pelajaan tiedot: \n Nimi on {player.name} \n Tyyppi on {player.type} \n Rotu on {player.race}");
+
+            player.position = new Vector2(1, 1);
+
+            Console.Clear();
+            player.Draw(level01);
+
+            bool game_running = true;
+            while (game_running)
+            {
+                ConsoleKeyInfo key = Console.ReadKey();
+                switch (key.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        player.Move(0, -1, level01);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        player.Move(0, 1, level01);
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        player.Move(-1, 0, level01);
+                        break;
+                    case ConsoleKey.RightArrow:
+                        player.Move(1, 0, level01);
+                        break;
+                    case ConsoleKey.Escape:
+                        game_running = false;
+                        break;
+                    default:
+                        break;
+                };
+                Console.Clear();
+                player.Draw(level01);
+            }
         }
     }
 }
