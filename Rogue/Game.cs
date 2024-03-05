@@ -80,6 +80,9 @@ namespace Rogue
             Map level01 = reader.LoadJSON("mapfile.json");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"Pelajaan tiedot: \n Nimi on {player.name} \n Tyyppi on {player.type} \n Rotu on {player.race}");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Press any button to continiue:");
+            Console.ReadKey();
 
             player.position = new Vector2(1, 1);
 
